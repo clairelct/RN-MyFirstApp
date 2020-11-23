@@ -6,24 +6,36 @@ import {
   Image,
   View,
   SafeAreaView,
+  Platform,
 } from "react-native";
-// import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "expo-status-bar";
+import Constants from "expo-constants";
 import List from "./components/List";
 import MovieResume from "./components/MovieResume";
 import Rates from "./components/Rates";
 import Actor from "./components/Actor";
 import colors from "./assets/css/colors";
+import AppText from "./components/AppText";
+import AppTextGrey from "./components/AppTextGrey";
 
 export default function App() {
+  console.log(Platform);
+  console.log(Constants);
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView
-      // contentContainerStyle={{
-      //   flex: 1,
-      //   // marginTop: Platform.OS === "android" ? 0 : Constants.statusBarHeight,
-      //   //marginTop: Constants.statusBarHeight,
-      // }}
-      >
+    <SafeAreaView
+      style={[
+        { flex: 1 },
+        {
+          marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
+        },
+      ]}
+    >
+      <ScrollView style={styles.mainContainer}>
+        <StatusBar
+          style={Platform.OS === "android" ? "light" : "dark"}
+          backgroundColor="black"
+        ></StatusBar>
         <View style={[styles.topBar, styles.internPadding]}>
           <Image
             style={styles.topBarImg}
@@ -53,8 +65,18 @@ export default function App() {
             <Text style={styles.secondaryTitle}>Top Billed Cast</Text>
             <Text style={styles.link}>See all</Text>
           </View>
-          <View style={styles.galleryContainer}>
-            <Actor></Actor>
+          <ScrollView horizontal={true} style={styles.galleryContainer}>
+            <Actor name="Matthew McConaughey" character="Cooper"></Actor>
+            <Actor name="Jessica Chastain" character="Murph"></Actor>
+            <Actor name="Anne Hataway" character="Brand"></Actor>
+          </ScrollView>
+          <View style={{ marginBottom: 15 }}>
+            <AppText text="Director"></AppText>
+            <AppTextGrey text="Christopher Nolan"></AppTextGrey>
+          </View>
+          <View>
+            <AppText text="Writers"></AppText>
+            <AppTextGrey text="Jonathan Nolan (written by) and Christopher Nolan (written by)"></AppTextGrey>
           </View>
         </View>
       </ScrollView>
